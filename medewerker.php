@@ -40,7 +40,6 @@ if($_SERVER['REQUEST_METHOD']== 'POST'){
 
         <div class="col-2">
         <form class="form-signin" action="medewerker.php" method="post">
-        <!-- hier begint de dropdown  -->
         <label for="Bestellingen per Winkel">Bestellingen per Winkel</label>
             <select name="winkelplaats" class="form-control form-control-lg">
                 <?php foreach ($vestigingen as $vestigingen): ?>
@@ -51,7 +50,7 @@ if($_SERVER['REQUEST_METHOD']== 'POST'){
             <input type="submit" name="submit" class="btn btn-lg btn-success btn-block" value="submit">
         </form>
         </div>
-        <!-- hier eindigd de dropdown -->
+
         <div class="container spacing" >
             <table class="table table-hover">
                 <tr>
@@ -82,6 +81,7 @@ if($_SERVER['REQUEST_METHOD']== 'POST'){
 </body>
 
 <?php
+
 // this inserts the header
     require_once('footer.php');
 
