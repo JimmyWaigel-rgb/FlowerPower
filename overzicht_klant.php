@@ -1,15 +1,12 @@
 <?php
 //index.php
 
-// start the session
-session_start();
-
 // include the database class
 include "database.php";
 
 require_once('header.php');
 // this inserts the header and the navbar
-
+$_SESSION['uname'];
 // $title contains the title for the page
 $title = "Login";
 
@@ -19,20 +16,20 @@ $title = "Login";
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>overzicht medewerker</title>
+    <title>Overzicht Medewerker</title>
 </head>
 <body>
 
 <?php
     $db = new database();
-    $winkels = $db->select("SELECT * FROM klant WHERE klantcode", []);
+    $winkels = $db->select("SELECT * FROM klant WHERE klantcode = :code;", ['code'=>$_SESSION['klantcode']]);
     // print_r($winkels);
 
-    $columns = array_keys($winkels[0]); // ['id', 'artikel, 'prijs']
+    $columns = array_keys($winkels[0]);
     $row_data = array_values($winkels);
 ?>
 <div class="">
-<button type="button" class="btn btn-primary btn-lg btn btn-light"><a href="klant.php">terug</a></button>
+<button type="button" class="btn btn-primary btn-lg btn btn-light"><a href="klant.php">Terug</a></button>
     <table class="table table-hover">
         <tr>
             <?php
