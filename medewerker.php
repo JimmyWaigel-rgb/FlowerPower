@@ -13,7 +13,17 @@ $vestigingen = $db->select("SELECT winkelcode, winkelplaats, winkelnaam FROM win
 if($_SERVER['REQUEST_METHOD']== 'POST'){
     $winkelcode = $_POST['winkelplaats'];
     $id = (int)substr($winkelcode, 0, 1);
-    $sql = "SELECT * FROM bestelling WHERE winkel_winkelcode = :id";
+    $sql = "SELECT bestelling.bestellingid, bestelling.aantal, bestelling.afgehaald, winkel.winkelnaam, medewerkers.gebruikersnaam, klant.gebruikersnaam, artikel.artikel
+    FROM bestelling
+    INNER JOIN winkel
+    ON winkel.winkelcode = winkel.winkelcode
+    INNER JOIN medewerkers
+    on medewerkers.medewerkerscode = medewerkers.medewerkerscode
+    INNER JOIN klant
+    ON klant.klantcode = klant.klantcode
+    INNER JOIN artikel
+    ON artikel.artikelcode = artikel.artikelcode
+    WHERE winkel_winkelcode = :id";
     $orders = $db->select($sql, ['id'=>$id]); //[[id=>1....],[id->2....],[id=>3...]]
     $columns = array_keys($orders[0]);
     $row_data = array_values($orders);

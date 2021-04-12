@@ -8,7 +8,7 @@ require_once('header.php');
 
 if(isset($_POST['submit'])){
 
-    $fields = ['artikel', 'prijs'];
+    $fields = ['date', 'time'];
 
     $error = false;
 
@@ -20,15 +20,15 @@ if(isset($_POST['submit'])){
 
 if(!$error){
     // store posted form values in variables
-    $artikel= $_POST['artikel'];
-    $prijs= $_POST['prijs'];
+    $date= $_POST['date'];
+    $time= $_POST['time'];
 
 
 
         
     $database = new database();
     // login function
-    $database->artikel_toevoegen($artikel, $prijs);
+    $database->date($date, $time);
  }
 }
 ?>
@@ -59,12 +59,12 @@ if(!$error){
             <form class="form-signin" action="" method="post">
             <h1 class="h3 mb-3 font-weight-normal">Artikel toevoegen</h1>
 
-                <label for="artikel">Artikel</label>
-                <input type="text" name="artikel" class="form-control" required="">
+                <label for="date">date</label>
+                <input type="date" name="date" class="form-control" required="">
                 <br>
 
-                <label for="prijs">Prijs</label>
-                <input type="number" name="prijs" class="form-control" required="">
+                <label for="prijs">time</label>
+                <input type="time" name="time" class="form-control" required="">
                 <br>
 
                 <input type="submit" name="submit" class="btn btn-lg btn-success btn-block" value="submit">
@@ -75,6 +75,63 @@ if(!$error){
     </div>
 </div>  
 </body>
+
+
+<?php
+    $db = new database();
+    $winkels = $db->select("SELECT * FROM reservering", []);
+    // print_r($winkels);
+
+    $columns = array_keys($winkels[0]); // ['id', 'artikel, 'prijs']
+    $row_data = array_values($winkels);
+?>
+<div class="container">
+
+<button type="button" class="btn btn-primary btn-lg btn btn-light"><a href="medewerker.php">terug</a></button>
+    <table class="table table-hover">
+        <tr>
+            <?php
+
+                foreach($columns as $column){ 
+                    echo "<th><strong> $column </strong></th>";
+                }
+
+            ?>
+            <th colspan="2">action</th>
+        </tr>
+        
+        <?php
+            foreach($row_data as $rows){ ?>
+            <tr>
+            <?php
+            foreach($rows as $data){
+                echo "<td> $data </td>";
+            }
+            ?>
+                <td>
+                    <a type="button" class="btn btn-success" href="edit_medewerkers.php?medewerkers_medewerkerscode=<?php echo $rows['medewerkerscode']?>">Edit</a>
+                </td>
+                <td>
+                    <a type="button" class="btn btn btn-danger" href="delete_medewerkers.php?medewerkers_medewerkerscode=<?php echo $rows['medewerkerscode']?>">Delete</a>
+                </td>
+            </tr>
+     <?php } ?>
+            </tr>
+    </table>
+</div>
+
+
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Overview</title>
+</head>
+<body>
+
+
 
 <?php
 require_once('footer.php');

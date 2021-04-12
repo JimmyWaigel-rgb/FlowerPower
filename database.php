@@ -10,7 +10,7 @@ class database{
 
 function __construct() {
     $this->servername ='localhost';
-    $this->database ='flowerpower';
+    $this->database ='oefen';
     $this->username ='root';
     $this->password ='';
     $this->charset = 'utf8mb4';
@@ -98,9 +98,9 @@ function registreer_klant($voorletters, $tussenvoegsel, $achternaam, $adres ,$po
 function bestellen($winkelcode, $artikelcode, $aantal, $medewerkerscode){
     // bestellingid, aantal, afgehaald, winkelcode, medewerkerscode, klantcode artikelcode
     $sql = "INSERT INTO bestelling VALUES (:bestellingid, :aantal, :afgehaald, :winkelcode, :medewerkerscode, :klantcode, :artikelcode)";
-    print_r($sql);
+    //print_r($sql);
     $stmt = $this->conn->prepare($sql); // checkt syntax van sql string en prepared op server
-    print_r($stmt);
+    //print_r($stmt);
     // executes prepared statements, passes values to named placeholders from sql string on line 51
     $stmt->execute([
         'bestellingid'=>NULL,
@@ -229,6 +229,22 @@ public function update_or_delete($statement, $named_placeholder){
     header('location:klant.php');
     exit();
 
+}
+
+function date($date, $time){
+    
+    $sql = "INSERT INTO reservering VALUE (:reservering, :date, :time);";
+
+    // Prepere
+    $stmt = $this->conn->prepare($sql);
+
+
+    // execute
+    $stmt->execute([
+        'reservering'=>NULL,
+        'date' => $date,
+        'time' => $time
+    ]);
 }
 
 }
